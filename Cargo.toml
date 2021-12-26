@@ -1,0 +1,29 @@
+[package]
+name = "monero-lws"
+version = "0.1.0"
+authors = ["Sebastian Kung <seb.kung@gmail.com>"]
+edition = "2018"
+exclude = ["/test"]
+keywords = ["asynchronous", "net"]
+license = "Apache-2.0"
+repository = "https://github.com/farcaster-project/monero-lws-rs"
+description = "RPC client for Monero light wallet server"
+
+[dependencies]
+anyhow = "1"
+fixed-hash = "0.7"
+hex = "0.4"
+http = "0.2"
+jsonrpc-core = "18"
+monero = { version = "0.16", features = ["serde_support"] }
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing = "0.1"
+uuid = { version = "0.8", features = ["v4"] }
+
+[dev-dependencies]
+# Async
+rand = "0.8.4"
+tokio = { version = "1.12.0", features = ["full"] }
+monero-rpc = { git = "https://github.com/monero-ecosystem/monero-rpc-rs", branch = "master" }
