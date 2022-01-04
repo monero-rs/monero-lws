@@ -9,7 +9,10 @@ async fn functional_lws_daemon_test() {
         .await
         .unwrap();
 
-    monero_lws.import_request(address, view_key).await.unwrap();
+    monero_lws
+        .import_request(address, view_key, Some(50))
+        .await
+        .unwrap();
 
     tokio::time::sleep(std::time::Duration::from_secs(10)).await;
 
@@ -36,7 +39,7 @@ async fn functional_lws_daemon_test() {
         )
         .await;
     match outs {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(err) => {
             assert_eq!("HTTP status client error (403 Forbidden) for url (http://localhost:8443/get_unspent_outs)", format!("{}", err));
         }
