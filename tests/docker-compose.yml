@@ -1,7 +1,7 @@
 version: "3.7"
 services:
     monerod:
-        image: monerod:latest
+        image: ghcr.io/farcaster-project/containers/monerod:0.17.2.3
         environment:
             NETWORK: regtest
             MONEROD_RPC_PORT: 18081
@@ -20,12 +20,11 @@ services:
         ports:
             - 18083:18083
     monero-wallet-lws:
-        image: monero-lws-daemon:latest
+        image: ghcr.io/farcaster-project/containers/monero-lws:latest
         environment:
             MONEROD_ADDRESS: monerod:18082
             NETWORK: main
         depends_on:
             - "monerod"
         ports:
-            - 8443:38084
-
+            - 38884:38884
