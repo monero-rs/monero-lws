@@ -16,9 +16,9 @@ checksum = "cdb031dd78e28731d87d56cc8ffef4a8f36ca26c38fe2de700543e627f8a464a"
 
 [[package]]
 name = "base58-monero"
-version = "0.3.2"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "935c90240f9b7749c80746bf88ad9cb346f34b01ee30ad4d566dfdecd6e3cc6a"
+checksum = "9d079cdf47e1ca75554200bb2f30bff5a5af16964cac4a566b18de9a5d48db2b"
 dependencies = [
  "thiserror",
 ]
@@ -567,9 +567,9 @@ dependencies = [
 
 [[package]]
 name = "monero"
-version = "0.16.0"
+version = "0.17.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e3732061cea7e75dc68ef986e0d5a393b3606c258c996abb4a81b759613ea1a0"
+checksum = "66756a4f855513ee1cf884e83b814440cf4b4b5842861e45de61f4a9c0d5168a"
 dependencies = [
  "base58-monero",
  "curve25519-dalek",
@@ -600,13 +600,14 @@ dependencies = [
  "serde_json",
  "tokio",
  "tracing",
- "uuid",
+ "uuid 0.8.2",
 ]
 
 [[package]]
 name = "monero-rpc"
 version = "0.1.0"
-source = "git+https://github.com/monero-ecosystem/monero-rpc-rs?branch=master#dcda1161f279f345c95cde783f0d002ab2ae93cf"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b992f53f1bc6c9b45931ba0392221e131354f87a48f88df58d3be6de65beadae"
 dependencies = [
  "anyhow",
  "chrono",
@@ -619,7 +620,7 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
- "uuid",
+ "uuid 1.1.2",
 ]
 
 [[package]]
@@ -922,9 +923,9 @@ checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
 
 [[package]]
 name = "sealed"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "636b9882a0f4cc2039488df89a10eb4b7976d4b6c1917fc0518f3f0f5e2c72ca"
+checksum = "6b5e421024b5e5edfbaa8e60ecf90bda9dbffc602dbb230e6028763f85f0c68c"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -966,12 +967,11 @@ dependencies = [
 
 [[package]]
 name = "serde-big-array"
-version = "0.3.2"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "18b20e7752957bbe9661cff4e0bb04d183d0948cdab2ea58cdb9df36a61dfe62"
+checksum = "3323f09a748af288c3dc2474ea6803ee81f118321775bffa3ac8f7e65c5e90e7"
 dependencies = [
  "serde",
- "serde_derive",
 ]
 
 [[package]]
@@ -1278,6 +1278,15 @@ name = "uuid"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc5cf98d8186244414c848017f0e2676b3fcb46807f6668a97dfe67359a3c4b7"
+dependencies = [
+ "getrandom 0.2.3",
+]
+
+[[package]]
+name = "uuid"
+version = "1.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dd6469f4314d5f1ffec476e05f17cc9a78bc7a27a6a857842170bdf8d6f98d2f"
 dependencies = [
  "getrandom 0.2.3",
 ]
