@@ -16,6 +16,7 @@
 
 //! Monero daemon and wallet RPC.
 
+// Coding conventions
 #![forbid(unsafe_code)]
 
 #[macro_use]
