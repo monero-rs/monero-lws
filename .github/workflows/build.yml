@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    name: Build
+    name: Build lib
     strategy:
       matrix:
         rust: [
@@ -35,3 +35,24 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: build
+
+  doc:
+    name: Build doc
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Rust Nightly
+      uses: actions-rs/toolchain@v1.0.7
+      with:
+        toolchain: nightly
+        override: true
+        profile: minimal
+
+    - uses: Swatinem/rust-cache@v2.0.0
+
+    - name: Build
+      uses: actions-rs/cargo@v1
+      with:
+        command: doc
+        args: --all-features --no-deps
