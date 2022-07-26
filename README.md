@@ -9,6 +9,10 @@
 
 A Rust RPC client for the [monero light wallet server](https://github.com/vtnerd/monero-lws).
 
+## Releases and Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) and [RELEASING.md](RELEASING.md).
+
 # License
 
 See [LICENSE](LICENSE).
