@@ -34,18 +34,6 @@ jobs:
         command: clippy
         args: --workspace --all-targets --all-features -- -D warnings
 
-  mdfmt:
-    name: Generic format (md)
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Run dprint
-      run: |
-        curl -fsSL https://dprint.dev/install.sh | sh
-        /home/runner/.dprint/bin/dprint check
-
   test:
     name: Test
     runs-on: ubuntu-latest

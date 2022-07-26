@@ -1,0 +1,27 @@
+name: Fmt
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.md'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.md'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  mdfmt:
+    name: Generic format (md)
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run dprint
+      run: |
+        curl -fsSL https://dprint.dev/install.sh | sh
+        /home/runner/.dprint/bin/dprint check
