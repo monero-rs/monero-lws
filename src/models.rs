@@ -64,6 +64,7 @@ pub struct AddressInfo {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
+#[allow(non_snake_case)]
 pub struct Rates {
     pub AUD: Option<f32>,
 }
