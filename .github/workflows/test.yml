@@ -1,0 +1,94 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  static_analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Rust Stable
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
+
+    - name: Run format
+      uses: actions-rs/cargo@v1
+      with:
+        command: fmt
+        args: -- --check
+
+    - name: Run clippy
+      uses: actions-rs/cargo@v1
+      with:
+        command: clippy
+        args: --workspace --all-targets --all-features -- -D warnings
+
+  mdfmt:
+    name: Generic format (md)
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run dprint
+      run: |
+        curl -fsSL https://dprint.dev/install.sh | sh
+        /home/runner/.dprint/bin/dprint check
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    services:
+      monerod:
+        image: ghcr.io/farcaster-project/containers/monerod:0.17.3.2
+        env:
+          NETWORK: regtest
+          OFFLINE: --offline
+          DIFFICULTY: 1
+        ports:
+        - 18081:18081
+        - 18082:18082
+      monero-wallet-rpc:
+        image: ghcr.io/farcaster-project/containers/monero-wallet-rpc:0.17.3.2
+        env:
+          MONERO_DAEMON_ADDRESS: monerod:18081
+          WALLET_RPC_PORT: 18083
+        ports:
+        - 18083:18083
+      monero-lws:
+        image: ghcr.io/farcaster-project/containers/monero-lws:latest
+        env:
+          NETWORK: main
+          MONERO_DAEMON_ADDRESS: monerod:18082
+        ports:
+        - 38884:38884
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Rust Stable
+      uses: actions-rs/toolchain@v1.0.7
+      with:
+        toolchain: stable
+        override: true
+        profile: minimal
+
+    - uses: Swatinem/rust-cache@v2.0.0
+
+    - name: Run tests
+      uses: actions-rs/cargo@v1
+      with:
+        command: test
+        args: --all-features
