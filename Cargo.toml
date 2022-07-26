@@ -1,12 +1,19 @@
 [package]
 name = "monero-lws"
 version = "0.1.0"
-authors = ["Sebastian Kung <seb.kung@gmail.com>"]
+authors = ["Monero Rust Contributors", "Sebastian Kung <seb.kung@gmail.com>"]
 edition = "2018"
-exclude = ["/test"]
-keywords = ["asynchronous", "net"]
-license = "Apache-2.0"
-repository = "https://github.com/farcaster-project/monero-lws-rs"
+include = [
+  "src/*",
+  "README.md",
+  "CHANGELOG.md",
+  "LICENSE",
+]
+keywords = ["monero", "asynchronous", "net"]
+license = "MIT"
+documentation = "https://docs.rs/monero-lws"
+homepage = "https://github.com/monero-rs/monero-lws"
+repository = "https://github.com/monero-rs/monero-lws"
 description = "RPC client for Monero light wallet server"
 
 [dependencies]
