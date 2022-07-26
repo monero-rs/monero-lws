@@ -9,10 +9,14 @@
 
 A Rust RPC client for the [monero light wallet server](https://github.com/vtnerd/monero-lws).
 
+## Tests
+
+To run tests against monero light wallet server you can use the Docker stack in `tests/`. Use `docker-compose up` and then run `cargo test`.
+
 ## Releases and Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) and [RELEASING.md](RELEASING.md).
 
-# License
+## License
 
 See [LICENSE](LICENSE).
