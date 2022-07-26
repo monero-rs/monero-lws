@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build
+    strategy:
+      matrix:
+        rust: [
+          1.56.1,
+          stable
+        ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Rust ${{ matrix.rust }}
+      uses: actions-rs/toolchain@v1.0.7
+      with:
+        toolchain: ${{ matrix.rust }}
+        override: true
+        profile: minimal
+
+    - uses: Swatinem/rust-cache@v2.0.0
+
+    - name: Build
+      uses: actions-rs/cargo@v1
+      with:
+        command: build
