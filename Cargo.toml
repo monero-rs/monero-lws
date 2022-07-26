@@ -15,6 +15,7 @@ documentation = "https://docs.rs/monero-lws"
 homepage = "https://github.com/monero-rs/monero-lws"
 repository = "https://github.com/monero-rs/monero-lws"
 description = "RPC client for Monero light wallet server"
+rust-version = "1.56.1"
 
 [dependencies]
 anyhow = "1"
