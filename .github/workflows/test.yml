@@ -39,6 +39,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         monero: [ 0.17.3.0, 0.17.3.2 ]
 
