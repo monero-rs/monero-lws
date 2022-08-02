@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        monero: [ 0.17.3.0, 0.17.3.2 ]
+        monero: [ 0.17.3.0, 0.17.3.2, 0.18.0.0 ]
 
     services:
       monerod:
