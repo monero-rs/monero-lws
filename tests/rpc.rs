@@ -21,7 +21,7 @@ use std::env; // 0.8
 async fn functional_lws_daemon_test() {
     let (address, view_key, monero_lws_client, regtest) = setup_monero().await;
 
-    let blocks = regtest.generate_blocks(100, address).await.unwrap();
+    let blocks = regtest.generate_blocks(100, address).await.unwrap().height;
 
     monero_lws_client
         .login(address, view_key, true, true)
@@ -72,7 +72,7 @@ async fn setup_monero() -> (
     monero::Address,
     monero::PrivateKey,
     monero_lws::LwsRpcClient,
-    monero_rpc::RegtestDaemonClient,
+    monero_rpc::RegtestDaemonJsonRpcClient,
 ) {
     let wallet_name: String = rand::thread_rng()
         .sample_iter(&Alphanumeric)
