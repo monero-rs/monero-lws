@@ -19,7 +19,7 @@ rust-version = "1.56.1"
 
 [dependencies]
 anyhow = "1"
-fixed-hash = "0.7"
+fixed-hash = "0.8"
 hex = "0.4"
 http = "0.2"
 jsonrpc-core = "18"
