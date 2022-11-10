@@ -40,7 +40,7 @@ hash_type_impl!(monero::cryptonote::hash::Hash);
 
 impl HashType for Vec<u8> {
     fn bytes(&self) -> &[u8] {
-        &*self
+        self
     }
     fn from_str(v: &str) -> anyhow::Result<Self> {
         Ok(hex::decode(v)?)
