@@ -100,12 +100,24 @@ pub struct LwsRpcClient {
 }
 
 impl LwsRpcClient {
-    pub fn new(addr: String) -> Self {
-        Self {
-            inner: CallerWrapper(Arc::new(RemoteCaller {
-                http_client: reqwest::ClientBuilder::new().build().unwrap(),
-                addr,
-            })),
+    pub fn new(addr: String, proxy: Option<String>) -> Self {
+        if let Some(proxy_address) = proxy {
+            Self {
+                inner: CallerWrapper(Arc::new(RemoteCaller {
+                    http_client: reqwest::Client::builder()
+                        .proxy(reqwest::Proxy::all(proxy_address).unwrap())
+                        .build()
+                        .unwrap(),
+                    addr,
+                })),
+            }
+        } else {
+            Self {
+                inner: CallerWrapper(Arc::new(RemoteCaller {
+                    http_client: reqwest::ClientBuilder::new().build().unwrap(),
+                    addr,
+                })),
+            }
         }
     }
 
