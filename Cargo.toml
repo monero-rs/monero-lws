@@ -2,7 +2,7 @@
 name = "monero-lws"
 version = "0.1.0"
 authors = ["Monero Rust Contributors", "Sebastian Kung <seb.kung@gmail.com>"]
-edition = "2018"
+edition = "2021"
 include = [
   "src/*",
   "README.md",
@@ -15,7 +15,7 @@ documentation = "https://docs.rs/monero-lws"
 homepage = "https://github.com/monero-rs/monero-lws"
 repository = "https://github.com/monero-rs/monero-lws"
 description = "RPC client for Monero light wallet server"
-rust-version = "1.83.0"
+rust-version = "1.84.0"
 
 [dependencies]
 anyhow = "1"
