@@ -14,6 +14,7 @@
 // copies or substantial portions of the Software.
 //
 
+use monero_rpc::RpcClientBuilder;
 use rand::{distributions::Alphanumeric, Rng};
 use std::env; // 0.8
 
@@ -80,11 +81,15 @@ async fn setup_monero() -> (
         .map(char::from)
         .collect();
     let dhost = env::var("MONERO_DAEMON_HOST").unwrap_or_else(|_| "localhost".into());
-    let daemon_client = monero_rpc::RpcClient::new(format!("http://{}:18081", dhost));
+    let daemon_client = RpcClientBuilder::new()
+        .build(format!("http://{}:18081", dhost))
+        .unwrap();
     let daemon = daemon_client.daemon();
     let regtest = daemon.regtest();
     let whost = env::var("MONERO_WALLET_HOST_1").unwrap_or_else(|_| "localhost".into());
-    let wallet_client = monero_rpc::RpcClient::new(format!("http://{}:18083", whost));
+    let wallet_client = RpcClientBuilder::new()
+        .build(format!("http://{}:18083", whost))
+        .unwrap();
     let wallet = wallet_client.wallet();
     wallet
         .create_wallet(wallet_name.clone(), None, "English".to_string())

@@ -13,6 +13,7 @@
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
 //
+#![allow(unexpected_cfgs)]
 
 use crate::util::*;
 use monero::{cryptonote::hash::Hash as CryptoNoteHash, util::address::PaymentId};
