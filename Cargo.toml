@@ -35,3 +35,8 @@ uuid = { version = "1.1", features = ["v4"] }
 rand = "0.8.4"
 tokio = { version = "1.12.0", features = ["full"] }
 monero-rpc = "0.5"
+
+[lints.rust]
+# The warning comes from fixed-hash
+# https://github.com/paritytech/parity-common/commit/9ff9316a53d03e14c267aa6dcc45c478bfb2b12a
+unexpected_cfgs = "allow"
