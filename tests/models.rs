@@ -9,8 +9,8 @@ fn test_deserialize_boolean() {
         "generated_locally": true,
     });
     let response: LoginResponse = serde_json::from_value(response_json).unwrap();
-    assert_eq!(response.new_address, false);
-    assert_eq!(response.generated_locally, true);
+    assert!(!response.new_address);
+    assert!(response.generated_locally);
 }
 
 #[test]
@@ -20,6 +20,6 @@ fn test_deserialize_boolean_number() {
         "generated_locally": 1,
     });
     let response: LoginResponse = serde_json::from_value(response_json).unwrap();
-    assert_eq!(response.new_address, false);
-    assert_eq!(response.generated_locally, true);
+    assert!(!response.new_address);
+    assert!(response.generated_locally);
 }
