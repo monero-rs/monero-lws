@@ -105,10 +105,7 @@ impl LwsRpcClient {
         Self::new_with_timeout(addr, None)
     }
 
-    pub fn new_with_timeout(
-        addr: String,
-        maybe_timeout: Option<u64>,
-    ) -> Self {
+    pub fn new_with_timeout(addr: String, maybe_timeout: Option<u64>) -> Self {
         let mut client_builder = reqwest::ClientBuilder::new();
         if let Some(timeout) = maybe_timeout {
             let timeout = Duration::from_secs(timeout);
