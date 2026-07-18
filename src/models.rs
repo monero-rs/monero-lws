@@ -15,9 +15,14 @@
 //
 #![allow(unexpected_cfgs)]
 
+use std::fmt;
+
 use crate::util::*;
 use monero::{cryptonote::hash::Hash as CryptoNoteHash, util::address::PaymentId};
-use serde::{Deserialize, Serialize};
+use serde::{
+    de::{Error as DeserializerError, Visitor},
+    Deserialize, Deserializer, Serialize,
+};
 
 macro_rules! hash_type {
     ($name:ident, $len:expr) => {
@@ -48,6 +53,42 @@ impl<T> MoneroResult<T> {
             MoneroResult::OK(v) => v,
         }
     }
+}
+
+// Compatibility with version 0.1
+fn number_or_boolean<'de, D>(deserializer: D) -> Result<bool, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    struct BoolVisitor;
+
+    impl<'de> Visitor<'de> for BoolVisitor {
+        type Value = bool;
+
+        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            formatter.write_str("integer or boolean")
+        }
+
+        fn visit_bool<E: DeserializerError>(self, value: bool) -> Result<bool, E> {
+            Ok(value)
+        }
+
+        fn visit_u64<E: DeserializerError>(self, value: u64) -> Result<bool, E> {
+            let boolean = match value {
+                0 => false,
+                1 => true,
+                _ => {
+                    return Err(E::invalid_value(
+                        serde::de::Unexpected::Unsigned(value),
+                        &self,
+                    ))
+                }
+            };
+            Ok(boolean)
+        }
+    }
+
+    deserializer.deserialize_any(BoolVisitor)
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -86,6 +127,8 @@ pub struct AddressTxs {
     pub scanned_block_height: u64,
     pub start_height: u64,
     pub blockchain_height: u64,
+    // May not be present in version 0.3
+    #[serde(default)]
     pub transactions: Vec<Transaction>,
 }
 
@@ -98,10 +141,14 @@ pub struct Transaction {
     pub total_sent: String,
     pub unlock_time: u64,
     pub height: Option<u64>,
+    // May not be present in version 0.3
+    #[serde(default)]
     pub spent_outputs: Vec<SpendObject>,
     pub payment_id: Option<HashString<PaymentId>>,
-    pub coinbase: u8,
-    pub mempool: u8,
+    #[serde(deserialize_with = "number_or_boolean")]
+    pub coinbase: bool,
+    #[serde(deserialize_with = "number_or_boolean")]
+    pub mempool: bool,
     pub mixin: u32,
 }
 
@@ -152,14 +199,18 @@ pub struct ImportResponse {
     pub payment_address: Option<monero::Address>,
     pub payment_id: Option<HashString<PaymentId>>,
     pub import_fee: Option<String>,
-    pub new_request: u8,
-    pub request_fulfilled: u8,
+    #[serde(deserialize_with = "number_or_boolean")]
+    pub new_request: bool,
+    #[serde(deserialize_with = "number_or_boolean")]
+    pub request_fulfilled: bool,
     pub status: String,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct LoginResponse {
-    pub new_address: u8,
-    pub generated_locally: u8,
+    #[serde(deserialize_with = "number_or_boolean")]
+    pub new_address: bool,
+    #[serde(deserialize_with = "number_or_boolean")]
+    pub generated_locally: bool,
     pub start_height: Option<u64>,
 }
