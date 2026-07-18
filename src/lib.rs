@@ -69,7 +69,7 @@ impl RemoteCaller {
         T: for<'de> Deserialize<'de> + Send + 'static + Debug,
     {
         let client = self.http_client.clone();
-        let uri = format!("{}/{}", &self.addr, method);
+        let uri = format!("{}/{}", self.addr, method);
         let json_params: jsonrpc_core::types::params::Params = params.into();
         let rsp = client.post(uri).json(&json_params).send().await?;
         if rsp.status() != 200 {
