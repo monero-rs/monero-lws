@@ -34,7 +34,7 @@ uuid = { version = "1.1", features = ["v4"] }
 # Async
 rand = "0.8.4"
 tokio = { version = "1.12.0", features = ["full"] }
-monero-rpc = { git = "https://github.com/monero-rs/monero-rpc-rs", rev = "befcfa1549592dace3302d083e934d82c559f72b" }
+monero-rpc = { version = "0.5.1" }
 
 [lints.rust]
 # The warning comes from fixed-hash
