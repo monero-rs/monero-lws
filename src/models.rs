@@ -20,8 +20,8 @@ use std::fmt;
 use crate::util::*;
 use monero::{cryptonote::hash::Hash as CryptoNoteHash, util::address::PaymentId};
 use serde::{
-    de::{Error as DeserializerError, Visitor},
     Deserialize, Deserializer, Serialize,
+    de::{Error as DeserializerError, Visitor},
 };
 
 macro_rules! hash_type {
@@ -81,7 +81,7 @@ where
                     return Err(E::invalid_value(
                         serde::de::Unexpected::Unsigned(value),
                         &self,
-                    ))
+                    ));
                 }
             };
             Ok(boolean)

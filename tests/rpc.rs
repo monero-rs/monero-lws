@@ -15,7 +15,7 @@
 //
 
 use monero_rpc::RpcClientBuilder;
-use rand::{distributions::Alphanumeric, Rng};
+use rand::{Rng, distributions::Alphanumeric};
 use std::env; // 0.8
 
 #[tokio::test]
@@ -64,7 +64,10 @@ async fn functional_lws_daemon_test() {
     match outs {
         Ok(_) => {}
         Err(err) => {
-            assert_eq!("HTTP status client error (403 Forbidden) for url (http://localhost:38884/get_unspent_outs)", format!("{}", err));
+            assert_eq!(
+                "HTTP status client error (403 Forbidden) for url (http://localhost:38884/get_unspent_outs)",
+                format!("{}", err)
+            );
         }
     };
 }
