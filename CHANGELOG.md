@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added support for LWS version 0.3 ([#35](https://github.com/monero-rs/monero-lws/pull/35)).
+- Added builder for `LwsRpcClient` ([#38](https://github.com/monero-rs/monero-lws/pull/38)).
+
+### Changed
+
+- Changed MSRV to 1.85, rust edition to 2024.
+- Updated `reqwest` to version `0.12`.
+- Updated `monero` to version `0.22`.
+
+### Removed
+
+- Removed `LwsRpcClient::new` method (replaced by the builder).
+
 ## [0.1.0] - 2022-07-26
 
 ### Added

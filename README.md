@@ -3,7 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/monero-lws.svg)](https://crates.io/crates/monero-lws)
 [![Documentation](https://docs.rs/monero-lws/badge.svg)](https://docs.rs/monero-lws)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![MSRV](https://img.shields.io/badge/MSRV-1.56.1-blue)](https://blog.rust-lang.org/2021/11/01/Rust-1.56.1.html)
+[![MSRV](https://img.shields.io/badge/MSRV-1.85.0-blue)](https://blog.rust-lang.org/2025/02/20/Rust-1.85.0/)
 
 # Monero Light Wallet Server RPC Client
 
