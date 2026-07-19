@@ -108,7 +108,6 @@ async fn setup_monero() -> (
 
     regtest.generate_blocks(100, address).await.unwrap();
     let dhost = env::var("MONERO_DAEMON_HOST").unwrap_or_else(|_| "localhost".into());
-    let lws_client = LwsRpcClientBuilder::new()
-        .build(format!("http://{}:38884", dhost));
+    let lws_client = LwsRpcClientBuilder::new().build(format!("http://{}:38884", dhost));
     (address, viewkey, lws_client, regtest)
 }
