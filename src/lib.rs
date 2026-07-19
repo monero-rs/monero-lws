@@ -14,7 +14,7 @@
 // copies or substantial portions of the Software.
 //
 
-//! Monero daemon and wallet RPC.
+//! Monero LWS client.
 
 // Coding conventions
 #![forbid(unsafe_code)]
@@ -94,6 +94,30 @@ impl CallerWrapper {
     }
 }
 
+/// Builder for generating a configured [`LwsRpcClient`].
+pub struct LwsRpcClientBuilder {
+    timeout: Option<Duration>,
+}
+
+impl LwsRpcClientBuilder {
+    /// Creates a new builder with default configuration.
+    pub fn new() -> Self {
+        Self { timeout: None }
+    }
+
+    /// Configures default request timeout.
+    pub fn timeout(mut self, timeout: u64) -> Self {
+        let timeout = Duration::from_secs(timeout);
+        self.timeout = Some(timeout);
+        self
+    }
+
+    /// Build and return the fully configured RPC client.
+    pub fn build(self, addr: impl Into<String>) -> LwsRpcClient {
+        LwsRpcClient::new(addr.into(), self)
+    }
+}
+
 /// Base RPC client. It is useless on its own, please see the attached methods instead.
 #[derive(Clone, Debug)]
 pub struct LwsRpcClient {
@@ -101,14 +125,9 @@ pub struct LwsRpcClient {
 }
 
 impl LwsRpcClient {
-    pub fn new(addr: String) -> Self {
-        Self::new_with_timeout(addr, None)
-    }
-
-    pub fn new_with_timeout(addr: String, maybe_timeout: Option<u64>) -> Self {
+    fn new(addr: String, config: LwsRpcClientBuilder) -> Self {
         let mut client_builder = reqwest::ClientBuilder::new();
-        if let Some(timeout) = maybe_timeout {
-            let timeout = Duration::from_secs(timeout);
+        if let Some(timeout) = config.timeout {
             client_builder = client_builder.timeout(timeout);
         };
         Self {

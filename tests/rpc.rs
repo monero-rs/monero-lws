@@ -14,6 +14,7 @@
 // copies or substantial portions of the Software.
 //
 
+use monero_lws::LwsRpcClientBuilder;
 use monero_rpc::RpcClientBuilder;
 use rand::{Rng, distributions::Alphanumeric};
 use std::env; // 0.8
@@ -107,6 +108,7 @@ async fn setup_monero() -> (
 
     regtest.generate_blocks(100, address).await.unwrap();
     let dhost = env::var("MONERO_DAEMON_HOST").unwrap_or_else(|_| "localhost".into());
-    let lws_client = monero_lws::LwsRpcClient::new(format!("http://{}:38884", dhost));
+    let lws_client = LwsRpcClientBuilder::new()
+        .build(format!("http://{}:38884", dhost));
     (address, viewkey, lws_client, regtest)
 }
