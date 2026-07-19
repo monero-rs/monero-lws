@@ -118,6 +118,12 @@ impl LwsRpcClientBuilder {
     }
 }
 
+impl Default for LwsRpcClientBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 /// Base RPC client. It is useless on its own, please see the attached methods instead.
 #[derive(Clone, Debug)]
 pub struct LwsRpcClient {
