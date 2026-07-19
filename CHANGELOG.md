@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-19
+
 ### Added
 
 - Added support for LWS version 0.3 ([#35](https://github.com/monero-rs/monero-lws/pull/35)).
@@ -28,5 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `LwsRpcClient` able to `login` to a Monero Light Wallet Server and execute commands.
 
-[Unreleased]: https://github.com/monero-rs/monero-lws/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/monero-rs/monero-lws/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/monero-rs/monero-lws/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/monero-rs/monero-lws/compare/8e11482b10b7d1e3c153330f848be59bcca0bdf4...v0.1.0
