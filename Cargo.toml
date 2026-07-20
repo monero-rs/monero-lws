@@ -21,7 +21,7 @@ rust-version = "1.85.0"
 anyhow = "1"
 fixed-hash = "0.8"
 hex = "0.4"
-http = "0.2"
+http = "1.4"
 jsonrpc-core = "18"
 monero = { version = "0.22", features = ["serde"] }
 reqwest = { version = "0.12", default-features = false, features = ["json"] }
