@@ -44,6 +44,8 @@ jobs:
         image:
           - lws: 0.1
             monero: 0.18.2.2
+          - lws: 0.2
+            monero: 0.18.2.2
 
     services:
       monerod:
