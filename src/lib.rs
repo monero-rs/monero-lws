@@ -223,7 +223,6 @@ impl LwsRpcClient {
             .chain(once(("address", address.to_string().into())))
             .chain(once(("view_key", view_key.to_string().into())))
             .chain(from_height.map(|v| ("from_height", v.into())));
-
         self.inner
             .request("import_wallet_request", RpcParams::map(params))
             .await
