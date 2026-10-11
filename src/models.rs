@@ -104,8 +104,8 @@ where
             formatter.write_str("string or boolean")
         }
 
-        fn visit_string<E: DeserializerError>(self, value: String) -> Result<String, E> {
-            Ok(value)
+        fn visit_str<E: DeserializerError>(self, value: &str) -> Result<String, E> {
+            Ok(value.to_owned())
         }
 
         fn visit_bool<E: DeserializerError>(self, value: bool) -> Result<String, E> {
