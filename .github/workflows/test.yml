@@ -41,11 +41,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        monero: [ 0.17.3.0, 0.17.3.2, 0.18.0.0, 0.18.1.2, 0.18.2.2 ]
+        image:
+          - lws: 0.1
+            monero: 0.18.2.2
 
     services:
       monerod:
-        image: ghcr.io/farcaster-project/containers/monerod:${{ matrix.monero }}
+        image: ghcr.io/farcaster-project/containers/monerod:${{ matrix.image.monero }}
         env:
           NETWORK: regtest
           MONEROD_RPC_PORT: 18081
@@ -56,7 +58,7 @@ jobs:
         - 18081:18081
         - 18082:18082
       monero-wallet-rpc:
-        image: ghcr.io/farcaster-project/containers/monero-wallet-rpc:${{ matrix.monero }}
+        image: ghcr.io/farcaster-project/containers/monero-wallet-rpc:${{ matrix.image.monero }}
         env:
           MONERO_DAEMON_ADDRESS: monerod:18081
           MONERO_DAEMON_HOST: monerod:18081
@@ -64,7 +66,7 @@ jobs:
         ports:
         - 18083:18083
       monero-lws:
-        image: ghcr.io/farcaster-project/containers/monero-lws:monerod-${{ matrix.monero }}
+        image: ghcr.io/farcaster-project/containers/monero-lws:${{ matrix.image.lws }}-monero-${{ matrix.image.monero }}
         env:
           NETWORK: main
           MONERO_DAEMON_ADDRESS: monerod:18082
