@@ -91,6 +91,31 @@ where
     deserializer.deserialize_any(BoolVisitor)
 }
 
+fn string_or_boolean<'de, D>(deserializer: D) -> Result<String, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    struct StringOrBoolVisitor;
+
+    impl<'de> Visitor<'de> for StringOrBoolVisitor {
+        type Value = String;
+
+        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            formatter.write_str("string or boolean")
+        }
+
+        fn visit_string<E: DeserializerError>(self, value: String) -> Result<String, E> {
+            Ok(value)
+        }
+
+        fn visit_bool<E: DeserializerError>(self, value: bool) -> Result<String, E> {
+            Ok(value.to_string())
+        }
+    }
+
+    deserializer.deserialize_any(StringOrBoolVisitor)
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct AddressInfo {
     pub locked_funds: String,
@@ -145,8 +170,10 @@ pub struct Transaction {
     #[serde(default)]
     pub spent_outputs: Vec<SpendObject>,
     pub payment_id: Option<HashString<PaymentId>>,
+    // v0.1: integer; v0.2+ bool
     #[serde(deserialize_with = "number_or_boolean")]
     pub coinbase: bool,
+    // v0.1: integer; v0.2+ bool
     #[serde(deserialize_with = "number_or_boolean")]
     pub mempool: bool,
     pub mixin: u32,
@@ -199,17 +226,23 @@ pub struct ImportResponse {
     pub payment_address: Option<monero::Address>,
     pub payment_id: Option<HashString<PaymentId>>,
     pub import_fee: Option<String>,
+    // v0.1: integer; v0.2+ bool
     #[serde(deserialize_with = "number_or_boolean")]
     pub new_request: bool,
+    // v0.1: integer; v0.2+ bool
     #[serde(deserialize_with = "number_or_boolean")]
     pub request_fulfilled: bool,
+    // v0.1: string; v0.2: boolean
+    #[serde(deserialize_with = "string_or_boolean")]
     pub status: String,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct LoginResponse {
+    // v0.1: integer; v0.2+ bool
     #[serde(deserialize_with = "number_or_boolean")]
     pub new_address: bool,
+    // v0.1: integer; v0.2+ bool
     #[serde(deserialize_with = "number_or_boolean")]
     pub generated_locally: bool,
     pub start_height: Option<u64>,
