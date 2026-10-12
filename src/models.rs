@@ -119,6 +119,7 @@ where
 #[derive(Clone, Debug, Deserialize)]
 pub struct VersionInfo {
     pub server_type: String,
+    pub server_version: String,
     pub api: u64,
 }
 

@@ -144,6 +144,7 @@ impl LwsRpcClient {
         }
     }
 
+    // Added in v1.0
     pub async fn get_version(&self) -> anyhow::Result<VersionInfo> {
         let params = empty();
         self.inner

@@ -26,7 +26,7 @@ async fn functional_lws_daemon_test() {
     let blocks = regtest.generate_blocks(100, address).await.unwrap().height;
 
     match monero_lws_client.get_version().await {
-        Ok(version_info) => assert!(version_info.api > 0),
+        Ok(version_info) => unreachable!(),
         Err(error) => {
             assert_eq!(
                 error.to_string(),
