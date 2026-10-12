@@ -126,6 +126,8 @@ pub struct AddressInfo {
     pub start_height: u64,
     pub transaction_height: u64,
     pub blockchain_height: u64,
+    // May not be present in version 0.3
+    #[serde(default)]
     pub spent_outputs: Vec<SpendObject>,
     pub rates: Option<Rates>,
 }
@@ -181,6 +183,8 @@ pub struct Transaction {
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct AmountOuts {
+    // May not be present in version 0.3
+    #[serde(default)]
     pub amount_outs: Vec<RandomOutput>,
 }
 

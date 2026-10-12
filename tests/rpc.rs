@@ -25,10 +25,11 @@ async fn functional_lws_daemon_test() {
 
     let blocks = regtest.generate_blocks(100, address).await.unwrap().height;
 
-    monero_lws_client
+    let response = monero_lws_client
         .login(address, view_key, true, true)
         .await
         .unwrap();
+    assert!(response.new_address);
 
     monero_lws_client
         .import_request(address, view_key, Some(blocks - 1))
@@ -37,15 +38,17 @@ async fn functional_lws_daemon_test() {
 
     regtest.generate_blocks(1, address).await.unwrap();
 
-    monero_lws_client
+    let response = monero_lws_client
         .get_address_info(address, view_key)
         .await
         .unwrap();
+    assert_eq!(response.total_received, "0");
 
     monero_lws_client
         .get_address_txs(address, view_key)
         .await
         .unwrap();
+    assert_eq!(response.transactions.len(), 0);
 
     monero_lws_client
         .get_random_outs(11, vec![monero::Amount::from_pico(1000000)])
@@ -63,7 +66,7 @@ async fn functional_lws_daemon_test() {
         )
         .await;
     match outs {
-        Ok(_) => {}
+        Ok(_) => unreachable!(),
         Err(err) => {
             assert_eq!(
                 "HTTP status client error (403 Forbidden) for url (http://localhost:38884/get_unspent_outs)",
