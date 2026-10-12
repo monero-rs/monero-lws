@@ -67,11 +67,19 @@ async fn functional_lws_daemon_test() {
         .await;
     match outs {
         Ok(_) => unreachable!(),
-        Err(err) => {
-            assert_eq!(
-                "HTTP status client error (403 Forbidden) for url (http://localhost:38884/get_unspent_outs)",
-                format!("{}", err)
-            );
+        Err(error) => {
+            if error.to_string().contains("400") {
+                // REST error: Not enough outputs to meet requested amount from ...
+                assert_eq!(
+                    error.to_string(),
+                    "HTTP status client error (400 Bad Request) for url (http://localhost:38884/get_unspent_outs)",
+                );
+            } else {
+                assert_eq!(
+                    error.to_string(),
+                    "HTTP status client error (403 Forbidden) for url (http://localhost:38884/get_unspent_outs)",
+                );
+            };
         }
     };
 }

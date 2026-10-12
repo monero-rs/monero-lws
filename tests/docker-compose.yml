@@ -18,7 +18,7 @@ services:
         ports:
             - 18083:18083
     monero-wallet-lws:
-        image: ghcr.io/farcaster-project/containers/monero-lws:0.3-monero-0.18.5.3
+        image: ghcr.io/farcaster-project/containers/monero-lws:1.0.0-monero-0.18.5.3
         environment:
             NETWORK: main
             MONERO_DAEMON_ADDRESS: monerod:18082
