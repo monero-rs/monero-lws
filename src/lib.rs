@@ -144,6 +144,13 @@ impl LwsRpcClient {
         }
     }
 
+    pub async fn get_version(&self) -> anyhow::Result<VersionInfo> {
+        let params = empty();
+        self.inner
+            .request("get_version", RpcParams::map(params))
+            .await
+    }
+
     pub async fn get_address_info(
         &self,
         address: monero::Address,

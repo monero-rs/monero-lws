@@ -116,6 +116,12 @@ where
     deserializer.deserialize_any(StringOrBoolVisitor)
 }
 
+#[derive(Clone, Debug, Deserialize)]
+pub struct VersionInfo {
+    pub server_type: String,
+    pub api: u64,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct AddressInfo {
     pub locked_funds: String,

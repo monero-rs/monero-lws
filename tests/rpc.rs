@@ -25,6 +25,16 @@ async fn functional_lws_daemon_test() {
 
     let blocks = regtest.generate_blocks(100, address).await.unwrap().height;
 
+    match monero_lws_client.get_version().await {
+        Ok(version_info) => assert!(version_info.api > 0),
+        Err(error) => {
+            assert_eq!(
+                error.to_string(),
+                "HTTP status client error (404 Not Found) for url (http://localhost:38884/get_version)",
+            );
+        }
+    };
+
     let response = monero_lws_client
         .login(address, view_key, true, true)
         .await
