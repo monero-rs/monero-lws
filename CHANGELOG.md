@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added support for LWS version 0.2 ([#49](https://github.com/monero-rs/monero-lws/pull/49)).
 
+### Fixed
+
+- Fixed deserialization error on processing `get_random_outs()` response.
+
 ## [0.2.0] - 2026-07-19
 
 ### Added
