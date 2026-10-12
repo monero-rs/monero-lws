@@ -44,7 +44,7 @@ async fn functional_lws_daemon_test() {
         .unwrap();
     assert_eq!(response.total_received, "0");
 
-    monero_lws_client
+    let response = monero_lws_client
         .get_address_txs(address, view_key)
         .await
         .unwrap();
