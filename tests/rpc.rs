@@ -25,13 +25,14 @@ async fn functional_lws_daemon_test() {
 
     let blocks = regtest.generate_blocks(100, address).await.unwrap().height;
 
-    match monero_lws_client.get_version().await {
-        Ok(version_info) => unreachable!(),
+    let api_version = match monero_lws_client.get_version().await {
+        Ok(version_info) => version_info.api, // LWS 1.0+
         Err(error) => {
             assert_eq!(
                 error.to_string(),
                 "HTTP status client error (404 Not Found) for url (http://localhost:38884/get_version)",
             );
+            0
         }
     };
 
@@ -78,7 +79,8 @@ async fn functional_lws_daemon_test() {
     match outs {
         Ok(_) => unreachable!(),
         Err(error) => {
-            if error.to_string().contains("400") {
+            if api_version > 0 {
+                // LWS 1.0+
                 // REST error: Not enough outputs to meet requested amount from ...
                 assert_eq!(
                     error.to_string(),
