@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added support for LWS version 0.2 ([#49](https://github.com/monero-rs/monero-lws/pull/49)).
+- Added support for LWS version 1.0.0 ([#53](https://github.com/monero-rs/monero-lws/pull/53)).
 - Added `get_version()` method ([#52](https://github.com/monero-rs/monero-lws/pull/52)).
 
 ### Fixed
