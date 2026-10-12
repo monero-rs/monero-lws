@@ -42,10 +42,14 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - lws: 0.1
-            monero: 0.18.2.2
-          - lws: 0.2
-            monero: 0.18.2.2
+          - lws: "0.1"
+            monero: "0.18.2.2"
+          - lws: "0.2"
+            monero: "0.18.2.2"
+          - lws: "0.2"
+            monero: "0.18.3.4"
+          - lws: "0.2"
+            monero: "0.18.4.0"
 
     services:
       monerod:
