@@ -18,7 +18,7 @@
 use std::fmt;
 
 use crate::util::*;
-use monero::{cryptonote::hash::Hash as CryptoNoteHash, util::address::PaymentId};
+use monero::{Address, cryptonote::hash::Hash as CryptoNoteHash, util::address::PaymentId};
 use serde::{
     Deserialize, Deserializer, Serialize,
     de::{Error as DeserializerError, Visitor},
@@ -234,7 +234,7 @@ pub struct Output {
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct ImportResponse {
-    pub payment_address: Option<monero::Address>,
+    pub payment_address: Option<Address>,
     pub payment_id: Option<HashString<PaymentId>>,
     pub import_fee: Option<String>,
     // v0.1: integer; v0.2+ bool

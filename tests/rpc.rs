@@ -14,6 +14,7 @@
 // copies or substantial portions of the Software.
 //
 
+use monero::{Address, Amount, PrivateKey};
 use monero_lws::LwsRpcClientBuilder;
 use monero_rpc::RpcClientBuilder;
 use rand::{Rng, distributions::Alphanumeric};
@@ -62,7 +63,7 @@ async fn functional_lws_daemon_test() {
     assert_eq!(response.transactions.len(), 0);
 
     monero_lws_client
-        .get_random_outs(11, vec![monero::Amount::from_pico(1000000)])
+        .get_random_outs(11, vec![Amount::from_pico(1000000)])
         .await
         .unwrap();
 
@@ -70,10 +71,10 @@ async fn functional_lws_daemon_test() {
         .get_unspent_outs(
             address,
             view_key,
-            monero::Amount::from_pico(1000),
+            Amount::from_pico(1000),
             10,
             true,
-            monero::Amount::from_pico(100),
+            Amount::from_pico(100),
         )
         .await;
     match outs {
@@ -97,8 +98,8 @@ async fn functional_lws_daemon_test() {
 }
 
 async fn setup_monero() -> (
-    monero::Address,
-    monero::PrivateKey,
+    Address,
+    PrivateKey,
     monero_lws::LwsRpcClient,
     monero_rpc::RegtestDaemonJsonRpcClient,
 ) {

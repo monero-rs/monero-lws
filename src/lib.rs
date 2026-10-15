@@ -25,8 +25,8 @@ mod models;
 
 pub use self::{models::*, util::*};
 
-use jsonrpc_core::types::*;
-
+use jsonrpc_core::types::Params;
+use monero::{Address, Amount, PrivateKey};
 use serde::Deserialize;
 use serde_json::Value;
 use std::{
@@ -154,8 +154,8 @@ impl LwsRpcClient {
 
     pub async fn get_address_info(
         &self,
-        address: monero::Address,
-        view_key: monero::PrivateKey,
+        address: Address,
+        view_key: PrivateKey,
     ) -> anyhow::Result<AddressInfo> {
         let params = empty()
             .chain(once(("address", address.to_string().into())))
@@ -167,8 +167,8 @@ impl LwsRpcClient {
 
     pub async fn get_address_txs(
         &self,
-        address: monero::Address,
-        view_key: monero::PrivateKey,
+        address: Address,
+        view_key: PrivateKey,
     ) -> anyhow::Result<AddressTxs> {
         let params = empty()
             .chain(once(("address", address.to_string().into())))
@@ -181,7 +181,7 @@ impl LwsRpcClient {
     pub async fn get_random_outs(
         &self,
         count: u32,
-        amounts: Vec<monero::Amount>,
+        amounts: Vec<Amount>,
     ) -> anyhow::Result<AmountOuts> {
         let params = empty().chain(once(("count", count.into()))).chain(once((
             "amounts",
@@ -199,12 +199,12 @@ impl LwsRpcClient {
 
     pub async fn get_unspent_outs(
         &self,
-        address: monero::Address,
-        view_key: monero::PrivateKey,
-        amount: monero::Amount,
+        address: Address,
+        view_key: PrivateKey,
+        amount: Amount,
         mixin: u32,
         use_dust: bool,
-        dust_threshold: monero::Amount,
+        dust_threshold: Amount,
     ) -> anyhow::Result<UnspentOuts> {
         let params = empty()
             .chain(once(("address", address.to_string().into())))
@@ -223,8 +223,8 @@ impl LwsRpcClient {
 
     pub async fn import_request(
         &self,
-        address: monero::Address,
-        view_key: monero::PrivateKey,
+        address: Address,
+        view_key: PrivateKey,
         from_height: Option<u64>,
     ) -> anyhow::Result<ImportResponse> {
         let params = empty()
@@ -238,8 +238,8 @@ impl LwsRpcClient {
 
     pub async fn login(
         &self,
-        address: monero::Address,
-        view_key: monero::PrivateKey,
+        address: Address,
+        view_key: PrivateKey,
         create_account: bool,
         generated_locally: bool,
     ) -> anyhow::Result<LoginResponse> {

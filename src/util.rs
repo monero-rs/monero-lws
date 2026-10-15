@@ -14,8 +14,10 @@
 // copies or substantial portions of the Software.
 //
 
-use serde::{Deserialize, Deserializer, Serialize};
 use std::fmt::{self, Display};
+
+use monero::{cryptonote::hash::Hash as CryptoNoteHash, util::address::PaymentId};
+use serde::{Deserialize, Deserializer, Serialize};
 
 pub trait HashType: Sized {
     fn bytes(&self) -> &[u8];
@@ -35,8 +37,8 @@ macro_rules! hash_type_impl {
     };
 }
 
-hash_type_impl!(monero::util::address::PaymentId);
-hash_type_impl!(monero::cryptonote::hash::Hash);
+hash_type_impl!(PaymentId);
+hash_type_impl!(CryptoNoteHash);
 
 impl HashType for Vec<u8> {
     fn bytes(&self) -> &[u8] {
