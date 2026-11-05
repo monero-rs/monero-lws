@@ -25,10 +25,22 @@ async fn functional_lws_daemon_test() {
 
     let blocks = regtest.generate_blocks(100, address).await.unwrap().height;
 
-    monero_lws_client
+    let api_version = match monero_lws_client.get_version().await {
+        Ok(version_info) => version_info.api, // LWS 1.0+
+        Err(error) => {
+            assert_eq!(
+                error.to_string(),
+                "HTTP status client error (404 Not Found) for url (http://localhost:38884/get_version)",
+            );
+            0
+        }
+    };
+
+    let response = monero_lws_client
         .login(address, view_key, true, true)
         .await
         .unwrap();
+    assert!(response.new_address);
 
     monero_lws_client
         .import_request(address, view_key, Some(blocks - 1))
@@ -37,15 +49,17 @@ async fn functional_lws_daemon_test() {
 
     regtest.generate_blocks(1, address).await.unwrap();
 
-    monero_lws_client
+    let response = monero_lws_client
         .get_address_info(address, view_key)
         .await
         .unwrap();
+    assert_eq!(response.total_received, "0");
 
-    monero_lws_client
+    let response = monero_lws_client
         .get_address_txs(address, view_key)
         .await
         .unwrap();
+    assert_eq!(response.transactions.len(), 0);
 
     monero_lws_client
         .get_random_outs(11, vec![monero::Amount::from_pico(1000000)])
@@ -63,12 +77,21 @@ async fn functional_lws_daemon_test() {
         )
         .await;
     match outs {
-        Ok(_) => {}
-        Err(err) => {
-            assert_eq!(
-                "HTTP status client error (403 Forbidden) for url (http://localhost:38884/get_unspent_outs)",
-                format!("{}", err)
-            );
+        Ok(_) => unreachable!(),
+        Err(error) => {
+            if api_version > 0 {
+                // LWS 1.0+
+                // REST error: Not enough outputs to meet requested amount from ...
+                assert_eq!(
+                    error.to_string(),
+                    "HTTP status client error (400 Bad Request) for url (http://localhost:38884/get_unspent_outs)",
+                );
+            } else {
+                assert_eq!(
+                    error.to_string(),
+                    "HTTP status client error (403 Forbidden) for url (http://localhost:38884/get_unspent_outs)",
+                );
+            };
         }
     };
 }

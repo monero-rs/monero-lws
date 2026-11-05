@@ -144,6 +144,14 @@ impl LwsRpcClient {
         }
     }
 
+    // Added in v1.0
+    pub async fn get_version(&self) -> anyhow::Result<VersionInfo> {
+        let params = empty();
+        self.inner
+            .request("get_version", RpcParams::map(params))
+            .await
+    }
+
     pub async fn get_address_info(
         &self,
         address: monero::Address,
@@ -223,7 +231,6 @@ impl LwsRpcClient {
             .chain(once(("address", address.to_string().into())))
             .chain(once(("view_key", view_key.to_string().into())))
             .chain(from_height.map(|v| ("from_height", v.into())));
-
         self.inner
             .request("import_wallet_request", RpcParams::map(params))
             .await
