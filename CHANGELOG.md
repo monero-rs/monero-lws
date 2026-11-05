@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for LWS version 1.0.0 ([#53](https://github.com/monero-rs/monero-lws/pull/53)).
 - Added `get_version()` method ([#52](https://github.com/monero-rs/monero-lws/pull/52)).
 
+### Changed
+
+- Updated `reqwest` to version `0.13`.
+- Bumped MSRV to `1.88.0`.
+
 ### Fixed
 
 - Fixed deserialization error on processing `get_random_outs()` response.
