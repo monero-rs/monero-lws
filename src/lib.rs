@@ -74,7 +74,8 @@ impl RemoteCaller {
         let rsp = client.post(uri).json(&json_params).send().await?;
         if rsp.status() != 200 {
             rsp.error_for_status()?;
-            panic!("should never reach here");
+            // 2xx?
+            return Err(anyhow::Error::msg("unexpected HTTP status code"));
         }
         let rsp = rsp.json::<T>().await?;
         Ok(rsp)
@@ -113,7 +114,7 @@ impl LwsRpcClientBuilder {
     }
 
     /// Build and return the fully configured RPC client.
-    pub fn build(self, addr: impl Into<String>) -> LwsRpcClient {
+    pub fn build(self, addr: impl Into<String>) -> anyhow::Result<LwsRpcClient> {
         LwsRpcClient::new(addr.into(), self)
     }
 }
@@ -131,17 +132,18 @@ pub struct LwsRpcClient {
 }
 
 impl LwsRpcClient {
-    fn new(addr: String, config: LwsRpcClientBuilder) -> Self {
+    fn new(addr: String, config: LwsRpcClientBuilder) -> anyhow::Result<Self> {
         let mut client_builder = reqwest::ClientBuilder::new();
         if let Some(timeout) = config.timeout {
             client_builder = client_builder.timeout(timeout);
         };
-        Self {
+        let client = Self {
             inner: CallerWrapper(Arc::new(RemoteCaller {
-                http_client: client_builder.build().unwrap(),
+                http_client: client_builder.build()?,
                 addr,
             })),
-        }
+        };
+        Ok(client)
     }
 
     // Added in v1.0

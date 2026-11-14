@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Return `Result` from `LwsRpcClientBuilder::build()` to prevent panic on client construction.
+
+### Fixed
+
+- Don't panic when daemon returns unexpected HTTP code.
+
 ## [0.3.0] - 2026-11-05
 
 ### Added
