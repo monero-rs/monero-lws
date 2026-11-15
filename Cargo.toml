@@ -12,7 +12,6 @@ include = [
 keywords = ["monero", "asynchronous", "net"]
 license = "MIT"
 documentation = "https://docs.rs/monero-lws"
-homepage = "https://github.com/monero-rs/monero-lws"
 repository = "https://github.com/monero-rs/monero-lws"
 description = "RPC client for Monero light wallet server"
 rust-version = "1.89.0"
@@ -28,7 +27,6 @@ reqwest = { version = "0.13", default-features = false, features = ["json"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tracing = "0.1"
-uuid = { version = "1.1", features = ["v4"] }
 
 [dev-dependencies]
 # Async
