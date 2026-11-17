@@ -38,26 +38,26 @@ async fn functional_lws_daemon_test() {
     };
 
     let response = monero_lws_client
-        .login(address, view_key, true, true)
+        .login(address, view_key.clone(), true, true)
         .await
         .unwrap();
     assert!(response.new_address);
 
     monero_lws_client
-        .import_request(address, view_key, Some(blocks - 1))
+        .import_request(address, view_key.clone(), Some(blocks - 1))
         .await
         .unwrap();
 
     regtest.generate_blocks(1, address).await.unwrap();
 
     let response = monero_lws_client
-        .get_address_info(address, view_key)
+        .get_address_info(address, view_key.clone())
         .await
         .unwrap();
     assert_eq!(response.total_received, "0");
 
     let response = monero_lws_client
-        .get_address_txs(address, view_key)
+        .get_address_txs(address, view_key.clone())
         .await
         .unwrap();
     assert_eq!(response.transactions.len(), 0);
