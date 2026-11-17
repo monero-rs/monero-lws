@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-17
+
 ### Changed
 
 - Return `Result` from `LwsRpcClientBuilder::build()` to prevent panic on client construction.
@@ -55,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `LwsRpcClient` able to `login` to a Monero Light Wallet Server and execute commands.
 
-[unreleased]: https://github.com/monero-rs/monero-lws/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/monero-rs/monero-lws/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/monero-rs/monero-lws/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/monero-rs/monero-lws/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/monero-rs/monero-lws/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/monero-rs/monero-lws/compare/8e11482b10b7d1e3c153330f848be59bcca0bdf4...v0.1.0
