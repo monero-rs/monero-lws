@@ -13,7 +13,7 @@
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
 //
-#![allow(unexpected_cfgs)]
+#![expect(unexpected_cfgs)]
 
 use std::fmt;
 
@@ -140,7 +140,7 @@ pub struct AddressInfo {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-#[allow(non_snake_case)]
+#[expect(non_snake_case)]
 pub struct Rates {
     pub AUD: Option<f32>,
 }
